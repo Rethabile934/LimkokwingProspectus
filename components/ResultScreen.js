@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, SafeAreaView, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Video } from 'expo-av';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Video } from 'expo-av'; // ✅ Use expo-av for compatibility
 
 const facultyColors = {
   "FACULTY OF BUSINESS AND GLOBALIZATION": '#1abc9c',
@@ -68,7 +69,9 @@ export default function ResultScreen({ route }) {
                         <View style={styles.expandedSection}>
                           {course.video && (
                             <Video
-                              source={course.video}
+                              source={typeof course.video === 'string' 
+                                ? { uri: course.video } // URL
+                                : course.video}     // require()
                               style={styles.video}
                               useNativeControls
                               resizeMode="contain"
@@ -167,7 +170,8 @@ const styles = StyleSheet.create({
   expandedSection: { 
     marginTop:12, 
     width:'100%', 
-    alignItems: 'center' 
+    alignItems: 'center',
+    flexShrink: 0 // ✅ Prevent clipping on mobile
   },
   video: {
     width: '80%',

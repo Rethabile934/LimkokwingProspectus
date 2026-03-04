@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import { Video } from 'expo-av';
+import { Video } from 'expo-av'; // ✅ Only use expo-av Video
 
 export default function CourseCard({ course }) {
   const [rating, setRating] = useState(course.rating || 0);
@@ -30,9 +30,10 @@ export default function CourseCard({ course }) {
         )}
       </View>
 
+      {/* Video Section */}
       {course.video && (
         <Video
-          source={course.video}
+          source={typeof course.video === 'string' ? { uri: course.video } : course.video}
           style={styles.video}
           useNativeControls
           resizeMode="contain"
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
   name: { fontWeight: '700', fontSize: 16, color: '#2c3e50', textAlign: 'center' },
   description: { fontSize: 13, color: '#2c3e50', marginTop: 4 },
   extra: { fontSize: 12, color: '#34495e', marginTop: 2 },
-  careerPath: { fontSize: 12, color: '#2c3eso', marginLeft: 8 },
+  careerPath: { fontSize: 12, color: '#2c3e50', marginLeft: 8 },
   video: { width: '100%', height: 120, borderRadius: 8, marginBottom: 8 },
   ratingContainer: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   ratingText: { fontWeight: '600', color: '#34495e' },

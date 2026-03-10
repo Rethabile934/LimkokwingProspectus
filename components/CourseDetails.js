@@ -1,25 +1,41 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, Animated } from 'react-native';
-import { Video } from 'expo-av';
+import React, { useState, useRef } from 'react';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  Animated,
+  Modal,
+  Platform,
+} from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import { WebView } from 'react-native-webview';
 
-export default function CourseCard({ course }) {
+export default function CourseDetails({ course }) {
   const [rating, setRating] = useState(course.rating || 0);
+  const [showVideo, setShowVideo] = useState(false);
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
+  // Handle star rating
   const handleRate = () => {
     if (rating < 6) {
       setRating(rating + 1);
       Animated.sequence([
         Animated.timing(scaleAnim, { toValue: 1.4, duration: 150, useNativeDriver: true }),
-        Animated.timing(scaleAnim, { toValue: 1, duration: 150, useNativeDriver: true })
+        Animated.timing(scaleAnim, { toValue: 1, duration: 150, useNativeDriver: true }),
       ]).start();
     }
   };
 
+  // Render stars with animation
   const renderStars = () => {
     return [...Array(6)].map((_, idx) => (
-      <Animated.View key={idx} style={{ transform: idx === rating - 1 ? [{ scale: scaleAnim }] : [] }}>
+      <Animated.View
+        key={idx}
+        style={{ transform: idx === rating - 1 ? [{ scale: scaleAnim }] : [] }}
+      >
         <FontAwesome
           name={idx < rating ? 'star' : 'star-o'}
           size={20}
@@ -32,8 +48,44 @@ export default function CourseCard({ course }) {
 
   return (
     <View style={styles.card}>
+      {/* Course Image */}
       {course.image && <Image source={course.image} style={styles.image} />}
 
+      {/* Watch Video Button */}
+      {course.video && (
+        <TouchableOpacity style={styles.videoButton} onPress={() => setShowVideo(true)}>
+          <FontAwesome name="play-circle" size={26} color="#fff" />
+          <Text style={styles.videoText}>Watch Course Video</Text>
+        </TouchableOpacity>
+      )}
+
+      {/* Video Modal */}
+      <Modal visible={showVideo} animationType="slide" transparent={false}>
+        <View style={{ flex: 1, backgroundColor: '#000' }}>
+          {Platform.OS === 'web' ? (
+            <iframe
+              src={course.video}
+              style={{ width: '100%', height: '100%' }}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          ) : (
+            <WebView
+              source={{ uri: course.video }}
+              style={{ flex: 1 }}
+              javaScriptEnabled
+              domStorageEnabled
+            />
+          )}
+
+          <TouchableOpacity style={styles.closeButton} onPress={() => setShowVideo(false)}>
+            <Text style={{ color: '#fff', fontWeight: 'bold' }}>Close Video</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+
+      {/* Course Info */}
       <View style={styles.info}>
         <Text style={styles.name}>{course.name}</Text>
         <Text style={styles.description}>{course.description}</Text>
@@ -55,16 +107,7 @@ export default function CourseCard({ course }) {
         )}
       </View>
 
-      {course.video && (
-        <Video
-          source={course.video}
-          style={styles.video}
-          useNativeControls
-          resizeMode="contain"
-          isLooping
-        />
-      )}
-
+      {/* Rating */}
       <View style={styles.ratingContainer}>
         <View style={{ flexDirection: 'row' }}>{renderStars()}</View>
         <TouchableOpacity style={styles.rateButton} onPress={handleRate}>
@@ -88,11 +131,42 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 3 },
     elevation: 4,
   },
+
   image: { width: '100%', height: 140, borderRadius: 8, marginBottom: 8 },
+
+  videoButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#2980b9',
+    padding: 8,
+    borderRadius: 6,
+    marginBottom: 8,
+  },
+
+  videoText: {
+    color: '#fff',
+    marginLeft: 8,
+    fontWeight: 'bold',
+  },
+
+  closeButton: {
+    position: 'absolute',
+    bottom: 40,
+    alignSelf: 'center',
+    backgroundColor: '#e74c3c',
+    padding: 12,
+    borderRadius: 8,
+  },
+
   info: { marginBottom: 8 },
+
   name: { fontWeight: '700', fontSize: 16, color: '#2c3e50', textAlign: 'center' },
+
   description: { fontSize: 13, color: '#7f8c8d', marginTop: 4 },
+
   extra: { fontSize: 12, color: '#34495e', marginTop: 2 },
+
   careerChip: {
     backgroundColor: '#ecf0f1',
     paddingHorizontal: 8,
@@ -101,9 +175,25 @@ const styles = StyleSheet.create({
     marginRight: 6,
     marginTop: 4,
   },
-  careerText: { fontSize: 18, color: '#2c3e50' },
-  video: { width: '100%', height: 120, borderRadius: 8, marginBottom: 8 },
-  ratingContainer: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 8 },
-  rateButton: { backgroundColor: '#27ae60', paddingHorizontal: 12, paddingVertical: 6, borderRadius: 6 },
-  rateButtonText: { color: '#fff', fontWeight: 'bold' },
+
+  careerText: { fontSize: 14, color: '#2c3e50' },
+
+  ratingContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 8,
+  },
+
+  rateButton: {
+    backgroundColor: '#27ae60',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 6,
+  },
+
+  rateButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
 });

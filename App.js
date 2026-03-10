@@ -1,4 +1,3 @@
-// App.js
 import React from 'react';
 import {
   ScrollView,
@@ -7,12 +6,14 @@ import {
   TouchableOpacity,
   StyleSheet,
   StatusBar,
-  SafeAreaView
 } from 'react-native';
 
 import { LinearGradient } from 'expo-linear-gradient';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+// ✅ SafeAreaView import
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { faculties } from './data/faculties';
 import CourseCard from './components/CourseCard';
@@ -32,7 +33,6 @@ function HomeScreen({ navigation }) {
         <StatusBar barStyle="light-content" />
 
         <ScrollView contentContainerStyle={styles.container}>
-
           {/* Header */}
           <View style={styles.headerContainer}>
             <Text style={styles.header}>
@@ -53,7 +53,6 @@ function HomeScreen({ navigation }) {
             </Text>
           </TouchableOpacity>
 
-          {/* Faculties */}
           {faculties.map((faculty) => (
             <View key={faculty.id} style={styles.facultyCard}>
               <Text style={styles.facultyTitle}>{faculty.name}</Text>
@@ -64,7 +63,6 @@ function HomeScreen({ navigation }) {
               </ScrollView>
             </View>
           ))}
-
         </ScrollView>
       </SafeAreaView>
     </LinearGradient>

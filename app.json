@@ -4,35 +4,31 @@
     "slug": "LimkokwingProspectus",
     "version": "1.0.0",
     "orientation": "portrait",
+    "platforms": ["android", "web"],
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#203a43"
+      "backgroundColor": "#ffffff"
     },
     "android": {
-      "package": "com.yourusername.limkokwingprospectus",
+      "jsEngine": "hermes",
+      "package": "com.rethabilekhosi.limkokwingprospectus",
       "versionCode": 1,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/adaptive_icon.png",
         "backgroundColor": "#ffffff"
       },
       "permissions": []
     },
-    "ios": {
-      "bundleIdentifier": "com.rethabilekhosi.limkokwingprospectus",
-      "supportsTablet": true
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
+    
     "assetBundlePatterns": [
       "**/*"
     ],
     "plugins": [
       "expo-font",
-      "expo-video"
+      "expo-asset"
     ],
     "extra": {
       "eas": {

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { 
-  View, Text, TouchableOpacity, StyleSheet, ScrollView, SafeAreaView, StatusBar
+  View, Text, TouchableOpacity, StyleSheet, ScrollView,StatusBar
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { faculties } from '../data/faculties'; 
 

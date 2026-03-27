@@ -18,7 +18,7 @@ export default function CourseDetails({ course }) {
   const [showVideo, setShowVideo] = useState(false);
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
-  // Handle star rating
+
   const handleRate = () => {
     if (rating < 6) {
       setRating(rating + 1);
@@ -29,7 +29,7 @@ export default function CourseDetails({ course }) {
     }
   };
 
-  // Render stars with animation
+
   const renderStars = () => {
     return [...Array(6)].map((_, idx) => (
       <Animated.View
@@ -48,10 +48,10 @@ export default function CourseDetails({ course }) {
 
   return (
     <View style={styles.card}>
-      {/* Course Image */}
+      
       {course.image && <Image source={course.image} style={styles.image} />}
 
-      {/* Watch Video Button */}
+      
       {course.video && (
         <TouchableOpacity style={styles.videoButton} onPress={() => setShowVideo(true)}>
           <FontAwesome name="play-circle" size={26} color="#fff" />
@@ -59,7 +59,6 @@ export default function CourseDetails({ course }) {
         </TouchableOpacity>
       )}
 
-      {/* Video Modal */}
       <Modal visible={showVideo} animationType="slide" transparent={false}>
         <View style={{ flex: 1, backgroundColor: '#000' }}>
           {Platform.OS === 'web' ? (
@@ -85,7 +84,6 @@ export default function CourseDetails({ course }) {
         </View>
       </Modal>
 
-      {/* Course Info */}
       <View style={styles.info}>
         <Text style={styles.name}>{course.name}</Text>
         <Text style={styles.description}>{course.description}</Text>
@@ -107,7 +105,6 @@ export default function CourseDetails({ course }) {
         )}
       </View>
 
-      {/* Rating */}
       <View style={styles.ratingContainer}>
         <View style={{ flexDirection: 'row' }}>{renderStars()}</View>
         <TouchableOpacity style={styles.rateButton} onPress={handleRate}>

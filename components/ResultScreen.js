@@ -63,7 +63,7 @@ export default function ResultScreen({ route }) {
         <ScrollView contentContainerStyle={styles.container}>
           
         
-          <Text style={styles.header}>🎯 Recommended Faculties</Text>
+          <Text style={styles.header}>Recommended Faculties</Text>
 
           
           {faculties.map((faculty, idx) => {
@@ -152,7 +152,7 @@ export default function ResultScreen({ route }) {
 
 const styles = StyleSheet.create({
   container: { 
-    padding: 20, 
+    padding: 120, 
     flexGrow:1, 
     alignItems: 'center'
   },
@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 10,
     marginBottom: 12,
-    alignSelf: 'center',
+    alignContent: 'center'
   },
 
   careerHeader: {

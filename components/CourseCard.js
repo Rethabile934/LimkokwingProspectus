@@ -10,7 +10,7 @@ export default function CourseCard({ course }) {
   const [showVideo, setShowVideo] = useState(false);
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
-  // Animate stars when rating changes
+
   const handleRate = () => {
     if (rating < 6) {
       setRating(rating + 1);
@@ -21,7 +21,7 @@ export default function CourseCard({ course }) {
     }
   };
 
-  // Render 6 stars, highlight up to current rating
+  
   const renderStars = () => {
     return [...Array(6)].map((_, idx) => (
       <Animated.View key={idx} style={{ transform: idx === rating - 1 ? [{ scale: scaleAnim }] : [] }}>
@@ -39,7 +39,6 @@ export default function CourseCard({ course }) {
     <View style={styles.card}>
       {course.image && <Image source={course.image} style={styles.image} />}
 
-      {/* VIDEO BUTTON */}
       {course.video && (
         <TouchableOpacity style={styles.videoButton} onPress={() => setShowVideo(true)}>
           <FontAwesome name="play-circle" size={20} color="#fff" />
@@ -47,7 +46,7 @@ export default function CourseCard({ course }) {
         </TouchableOpacity>
       )}
 
-      {/* VIDEO MODAL */}
+   
       <Modal visible={showVideo} animationType="slide">
         <View style={{ flex: 1, backgroundColor: '#000' }}>
           <WebView
@@ -62,7 +61,7 @@ export default function CourseCard({ course }) {
         </View>
       </Modal>
 
-      {/* Course Info */}
+      
       <View style={styles.info}>
         <Text style={styles.name}>{course.name}</Text>
         <Text style={styles.description}>{course.description}</Text>
@@ -84,7 +83,7 @@ export default function CourseCard({ course }) {
         )}
       </View>
 
-      {/* Rating */}
+    
       <View style={styles.ratingContainer}>
         <View style={{ flexDirection: 'row' }}>{renderStars()}</View>
         <TouchableOpacity style={styles.rateButton} onPress={handleRate}>
@@ -107,6 +106,7 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     shadowOffset: { width: 0, height: 3 },
     elevation: 4,
+    alignContent: 'center'
   },
 
   image: { width: '100%', height: 140, borderRadius: 8, marginBottom: 8 },

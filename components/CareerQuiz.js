@@ -110,7 +110,7 @@ export default function CareerQuiz({ navigation }) {
               onPress={() => handleAnswer(null)}
               activeOpacity={0.8}
             >
-              <Text style={styles.optionText}>No / Not Interested</Text>
+              <Text style={styles.optionText}>No</Text>
             </TouchableOpacity>
           </View>
 
@@ -128,11 +128,11 @@ export default function CareerQuiz({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 20, flexGrow:1, justifyContent:'center' },
+  container: { padding: 180, flexGrow:1, justifyContent:'center' },
   header: { fontSize:28, fontWeight:'700', color:'#fff', textAlign:'center', marginBottom:30 },
   card: { backgroundColor:'rgba(255,255,255,0.98)', padding:25, borderRadius:16, marginBottom:20, shadowColor:'#000', shadowOpacity:0.15, shadowOffset:{width:0,height:4}, shadowRadius:6, elevation:5 },
   question: { fontSize:20, fontWeight:'700', marginBottom:20, color:'#2c3e50', textAlign:'center' },
-  optionButton: { backgroundColor:'#1abc9c', paddingVertical:12, paddingHorizontal:20, borderRadius:12, marginBottom:15, alignItems:'center' },
+  optionButton: { backgroundColor:'#1abc9c', paddingVertical:12, paddingHorizontal:100, borderRadius:12, marginBottom:15, alignItems:'center' },
   optionText: { color:'#fff', fontSize:16, fontWeight:'600' },
   progressBarContainer: { height:6, width:'100%', backgroundColor:'rgba(255,255,255,0.3)', borderRadius:3, marginBottom:8 },
   progressBar: { height:'100%', backgroundColor:'#1abc9c', borderRadius:3 },

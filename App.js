@@ -17,9 +17,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { faculties } from './data/faculties';
 import CareerQuiz from './components/CareerQuiz';
+import CourseCard from './components/CourseCard';
 import CourseDetails from './components/CourseDetails';
 import ResultScreen from './components/ResultScreen';
-import FacultyCard from './components/FacultyCard';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -53,12 +54,15 @@ function HomeScreen({ navigation }) {
           </TouchableOpacity>
 
           {faculties.map((faculty) => (
-            <FacultyCard 
-              key={faculty.id} 
-              faculty={faculty} 
-              navigation={navigation}
-            />
+            <View key={faculty.id}>
+              <Text>{faculty.name}</Text>
+
+              {faculty.courses.map((course) => (
+              <CourseCard key={course.id} course={course} />
           ))}
+
+  </View>
+))}
         </ScrollView>
       </SafeAreaView>
     </LinearGradient>
